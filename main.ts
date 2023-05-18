@@ -8,7 +8,7 @@ const port = Number(Deno.env.get('PORT') ?? '8080');
 async function pathHandler(path: string, params: URLSearchParams): Promise<Response | null> {
   const render = renders[path];
   if (render) {
-    return await render.render(params);
+    return await render.render(path, params);
   }
   return null;
 }

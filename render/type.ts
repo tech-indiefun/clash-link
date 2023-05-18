@@ -1,3 +1,3 @@
 export interface Render {
-    render(params: URLSearchParams): Promise<Response>
+    render(path: string, params: URLSearchParams): Promise<Response>
 }
