@@ -16,7 +16,7 @@ async function pathHandler(path: string, params: URLSearchParams): Promise<Respo
 async function linkHandler(link: string): Promise<Response> {
   const response = await fetch(link);
   if (response.ok) {
-    const host = new URL(response.url).host;
+    const host = new URL(link).host;
     const parser = parsers[host];
     if (parser) {
       const raw = await response.text();
