@@ -75,20 +75,6 @@ const parser: Parser = {
         }
 
         {
-            // config DNS if not set
-            obj.dns = obj.dns ?? {
-                enable: true,
-                ipv6: false,
-                nameserver: [
-                    '1.2.4.8',
-                    '114.114.114.114',
-                    '223.5.5.5',
-                    'tls://dns.rubyfish.cn:853',
-                ]
-            }
-        }
-
-        {
             // custom rule
             obj.rules.unshift(
                 'DOMAIN,chat.openai.com,US',
