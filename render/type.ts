@@ -1,5 +1,3 @@
-export type Html = string;
-
 export interface Render {
-    render(): Promise<Html>
+    render(params: URLSearchParams): Promise<Response>
 }

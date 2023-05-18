@@ -3,7 +3,7 @@ import { Render } from "../type.ts";
 
 const cache: Record<string, string> = {}
 
-const fetch = async (path: string) => {
+const markdown = async (path: string) => {
     if (cache[path]) {
         return cache[path]
     }
@@ -15,7 +15,8 @@ const fetch = async (path: string) => {
 
 const render: Render = {
     render: async () => {
-        return await fetch('README.md');
+        const html = await markdown('README.md');
+        return new Response(html, { headers: { 'content-type': 'text/html; charset=utf-8' } });
     }
 }
 
