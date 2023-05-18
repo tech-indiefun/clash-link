@@ -10,7 +10,8 @@ Easy manage clash profile parser on cloud platform like [deno.dev](https://deno.
 
 ### Support
 
-* only support [v2free](https://v2free.org/) airport now
+* [v2free](https://v2free.org/) airport
+* [v2sub](https://v2sub.com/) airport
 
 ### OpenSource
 
