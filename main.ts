@@ -30,13 +30,13 @@ async function linkHandler(link: string, share?: boolean): Promise<Response> {
 
 await serve(
   async (request: Request) => {
-    const _url = deUrl(request.url)
-    const url = new URL(_url);
+    const url = new URL(request.url);
     const res = await pathHandler(url.pathname, url.searchParams);
     if (res) {
       return res;
     }
-    return linkHandler(`${url.pathname.slice(1)}${url.search}`, _url.includes('share=1'));
+    const pathName = deUrl(url.pathname.slice(1))
+    return linkHandler(`${pathName}`, pathName.includes('share=1'));
   },
   { hostname: host, port }
 );
