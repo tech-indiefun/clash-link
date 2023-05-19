@@ -1,5 +1,5 @@
 import { renderMarkdown } from "https://deno.land/x/markdown_renderer@0.1.3/mod.ts";
-import { Render } from "../type.ts";
+import { Route } from "../type.ts";
 
 const cache: Record<string, string> = {}
 
@@ -13,7 +13,7 @@ const markdown = async (path: string) => {
     return html
 }
 
-const render: Render = {
+const render: Route = {
     render: async () => {
         const html = await markdown('README.md');
         return new Response(html, { headers: { 'content-type': 'text/html; charset=utf-8' } });

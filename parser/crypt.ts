@@ -100,9 +100,9 @@ export function enUrlShare(url: string) {
   const last = arr[arr.length - 1];
   let sharUrl = url;
   if (last.includes("?")) {
-    sharUrl += "&share=1";
+    sharUrl += "&mode=share";
   } else {
-    sharUrl += "?share=1";
+    sharUrl += "?mode=share";
   }
 
   const en = encrypt(sharUrl, salt, method);

@@ -13,12 +13,17 @@ const parser: Parser = {
             const usProxies = []
             const sgProxies = []
             const jpProxies = []
+            const shareArr = []
             const shareProxies = []
+            const unShareProxies = []
             for (let i = 0; i < proxies.length; i++) {
                 const proxy = proxies[i]
                 if (share) {
                     if (proxy.name.includes('不限流量')){
-                        shareProxies.push(proxy)
+                        shareProxies.push(proxy.name)
+                        shareArr.push(proxy)
+                    } else {
+                        unShareProxies.push(proxy.name)
                     }
                 }
                 if (proxy.type === 'vmess') {
@@ -38,9 +43,16 @@ const parser: Parser = {
                 const group = groups[i]
                 const proxies = []
                 if (share) {
-                    for (let j = 0; j < shareProxies.length; j++) {
-                        const name = shareProxies[j].name
-                        proxies.push(name)
+                    if (group.name.includes('全球'))
+                        continue
+
+                    for (let j = 0; j < group.proxies.length; j++) {
+                        const name = group.proxies[j]
+                        if (!unShareProxies.includes(name)) {
+                            proxies.push(name)
+                        }
+                        if (shareProxies.includes(name))
+                            proxies.push(name)
                     }
                 }
                 else {
@@ -81,15 +93,8 @@ const parser: Parser = {
                 proxies: jpProxies
             }
 
-            const groupShare = {
-                name: 'Share',
-                ...prependGroup,
-                proxies: shareProxies.map(p => p.name)
-            }
-
             if (share) {
-                groups.unshift(groupShare)
-                obj.proxies = shareProxies
+                obj.proxies = shareArr
             }
             else {
                 groups.unshift(groupJP)
@@ -104,11 +109,11 @@ const parser: Parser = {
             // custom rule
             if (share) {
                 obj.rules.unshift(
-                    'DOMAIN,chat.openai.com,Share',
-                    'DOMAIN-SUFFIX,openai.com,Share',
-                    'DOMAIN-SUFFIX,bing.com,Share',
-                    'DOMAIN-SUFFIX,github.com,Share',
-                    'DOMAIN-SUFFIX,githubusercontent.com,Share',
+                    'DOMAIN,chat.openai.com,🔰 节点选择',
+                    'DOMAIN-SUFFIX,openai.com,🔰 节点选择',
+                    'DOMAIN-SUFFIX,bing.com,🔰 节点选择',
+                    'DOMAIN-SUFFIX,github.com,🔰 节点选择',
+                    'DOMAIN-SUFFIX,githubusercontent.com,🔰 节点选择',
                     'DOMAIN-SUFFIX,v2free.top,DIRECT',
                     'DOMAIN-SUFFIX,deno.dev,DIRECT',
                     'DOMAIN-SUFFIX,luming.fun,DIRECT',

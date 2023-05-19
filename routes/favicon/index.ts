@@ -1,4 +1,4 @@
-import { Render } from "../type.ts";
+import { Route } from "../type.ts";
 
 const cache: Record<string, Uint8Array> = {}
 
@@ -11,7 +11,7 @@ const favicon = async (path: string) => {
     return icon;
 }
 
-const render: Render = {
+const render: Route = {
     render: async () => {
         const icon = await favicon('favicon.ico');
         return new Response(icon, { headers: { 'content-type': 'image/x-icon' } });
