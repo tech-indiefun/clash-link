@@ -3,7 +3,7 @@ import { Yaml, Parser, Profile } from "../type.ts";
 
 const _GROUP = 'Proxy'
 const parser: Parser = {
-    async parse(raw: Yaml): Promise<Yaml> {
+    parse(raw: Yaml): Yaml {
         const profile = yaml.parse(raw) as Profile
 
         {

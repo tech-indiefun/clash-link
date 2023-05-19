@@ -51,6 +51,7 @@
     "https://deno.land/std@0.187.0/yaml/schema/json.ts": "5f41dd7c2f1ad545ef6238633ce9ee3d444dfc5a18101e1768bd5504bf90e5e5",
     "https://deno.land/std@0.187.0/yaml/schema/mod.ts": "4472e827bab5025e92bc2eb2eeefa70ecbefc64b2799b765c69af84822efef32",
     "https://deno.land/std@0.187.0/yaml/stringify.ts": "fffc09c65c68d3d63f8159e8cbaa3f489bc20a8e55b4fbb61a8c2e9f914d1d02",
-    "https://deno.land/std@0.187.0/yaml/type.ts": "1aabb8e0a3f4229ce0a3526256f68826d9bdf65a36c8a3890ead8011fcba7670"
+    "https://deno.land/std@0.187.0/yaml/type.ts": "1aabb8e0a3f4229ce0a3526256f68826d9bdf65a36c8a3890ead8011fcba7670",
+    "https://esm.sh/v122/entities@2.2.0/deno/lib/maps/entities.json.js": "01f944ad035ed04933ce70dc72d69f7cff02c246c41ae4586358b37e1f00c2ae"
   }
 }

@@ -2,7 +2,7 @@ export type Host = string;
 export type Yaml = string;
 
 export interface Parser {
-    parse(raw: Yaml): Promise<Yaml>
+    parse(raw: Yaml, share?: boolean): Yaml
 }
 
 // see: https://github.com/Dreamacro/clash/blob/master/config/config.go
