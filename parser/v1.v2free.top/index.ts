@@ -109,6 +109,7 @@ const parser: Parser = {
             // custom rule
             if (share) {
                 obj.rules.unshift(
+                    'DOMAIN-SUFFIX,docker.com,🔰 节点选择',
                     'DOMAIN,chat.openai.com,🔰 节点选择',
                     'DOMAIN-SUFFIX,openai.com,🔰 节点选择',
                     'DOMAIN-SUFFIX,bing.com,🔰 节点选择',
@@ -122,6 +123,7 @@ const parser: Parser = {
             }
             else {
                 obj.rules.unshift(
+                    'DOMAIN-SUFFIX,docker.com,🔰 节点选择',
                     'DOMAIN,chat.openai.com,US',
                     'DOMAIN-SUFFIX,openai.com,SG',
                     'DOMAIN-SUFFIX,bing.com,US',
