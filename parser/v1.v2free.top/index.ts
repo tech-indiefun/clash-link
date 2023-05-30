@@ -14,61 +14,60 @@ const parser: Parser = {
             const sgProxies = []
             const jpProxies = []
             const shareArr = []
-            const shareProxies = []
             const unShareProxies = []
             for (let i = 0; i < proxies.length; i++) {
                 const proxy = proxies[i]
                 if (share) {
                     if (proxy.name.includes('不限流量')){
-                        shareProxies.push(proxy.name)
                         shareArr.push(proxy)
                     } else {
                         unShareProxies.push(proxy.name)
                     }
                 }
-                if (proxy.type === 'vmess') {
-                    if (proxy.name.includes('美国'))
-                        usProxies.push(proxy.name)
-                    else if (proxy.name.includes('狮城'))
-                        sgProxies.push(proxy.name)
-                    else if (proxy.name.includes('日本'))
-                        jpProxies.push(proxy.name)
-                    vmess.push(proxy)
-                } else {
-                    ssName.push(proxy.name)
+                else {
+                    if (proxy.type === 'vmess') {
+                        if (proxy.name.includes('美国'))
+                            usProxies.push(proxy.name)
+                        else if (proxy.name.includes('狮城'))
+                            sgProxies.push(proxy.name)
+                        else if (proxy.name.includes('日本'))
+                            jpProxies.push(proxy.name)
+                        vmess.push(proxy)
+                    } else {
+                        ssName.push(proxy.name)
+                    }
                 }
             }
             const groups = obj['proxy-groups']
+            const newGroups = []
             for (let i = 0; i < groups.length; i++) {
                 const group = groups[i]
                 const proxies = []
-                if (share) {
-                    if (group.name.includes('全球'))
-                        continue
-
-                    for (let j = 0; j < group.proxies.length; j++) {
-                        const name = group.proxies[j]
-                        if (!unShareProxies.includes(name)) {
-                            proxies.push(name)
-                        }
-                        if (shareProxies.includes(name))
-                            proxies.push(name)
-                    }
-                }
-                else {
-                    for (let j = 0; j < group.proxies.length; j++) {
-                        const name = group.proxies[j]
-                        if (!ssName.includes(name)) {
-                            proxies.push(name)
+                if (group.name.includes('节点选择') || group.name.includes('自动选择')) {
+                    if (share) {
+                        for (let j = 0; j < group.proxies.length; j++) {
+                            const name = group.proxies[j]
+                            if (!unShareProxies.includes(name)) {
+                                proxies.push(name)
+                            }
                         }
                     }
-                    if (group.name === '🔰 节点选择') {
-                        proxies.unshift('JP')
-                        proxies.unshift('SG')
-                        proxies.unshift('US')
+                    else {
+                        for (let j = 0; j < group.proxies.length; j++) {
+                            const name = group.proxies[j]
+                            if (!ssName.includes(name)) {
+                                proxies.push(name)
+                            }
+                        }
+                        if (group.name.includes('节点选择')) {
+                            proxies.unshift('JP')
+                            proxies.unshift('SG')
+                            proxies.unshift('US')
+                        }
                     }
+                    group.proxies = proxies
+                    newGroups.push(group)
                 }
-                group.proxies = proxies
             }
             const prependGroup = {
                 type: 'url-test',
@@ -97,19 +96,126 @@ const parser: Parser = {
                 obj.proxies = shareArr
             }
             else {
-                groups.unshift(groupJP)
-                groups.unshift(groupSG)
-                groups.unshift(groupUS)
+                newGroups.unshift(groupJP)
+                newGroups.unshift(groupSG)
+                newGroups.unshift(groupUS)
 
                 obj.proxies = vmess
+            }
+            newGroups.push({
+                name: '🎯 全球直连',
+                type: 'select',
+                proxies: ['DIRECT']
+            })
+            newGroups.push({
+                name: '🐟 漏网之鱼',
+                type: 'select',
+                proxies: ['🔰 节点选择', '🎯 全球直连']
+            })
+            obj['proxy-groups'] = newGroups
+        }
+
+        {
+            obj["rule-providers"] = {
+                reject: {
+                    type: 'http',
+                    behavior: 'domain',
+                    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt",
+                    path: './ruleset/reject.yaml',
+                    interval: 86400
+                },
+
+                icloud: {
+                    type: 'http',
+                    behavior: 'domain',
+                    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/icloud.txt",
+                    path: './ruleset/icloud.yaml',
+                    interval: 86400
+                },
+                apple: {
+                    type: 'http',
+                    behavior: 'domain',
+                    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/apple.txt",
+                    path: './ruleset/apple.yaml',
+                    interval: 86400
+                },
+                google: {
+                    type: 'http',
+                    behavior: 'domain',
+                    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/google.txt",
+                    path: './ruleset/google.yaml',
+                    interval: 86400
+                },
+                proxy: {
+                    type: 'http',
+                    behavior: 'domain',
+                    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/proxy.txt",
+                    path: './ruleset/proxy.yaml',
+                    interval: 86400
+                },
+                direct: {
+                    type: 'http',
+                    behavior: 'domain',
+                    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/direct.txt",
+                    path: './ruleset/direct.yaml',
+                    interval: 86400
+                },
+                private: {
+                    type: 'http',
+                    behavior: 'domain',
+                    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/private.txt",
+                    path: './ruleset/private.yaml',
+                    interval: 86400
+                },
+                gfw: {
+                    type: 'http',
+                    behavior: 'domain',
+                    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/gfw.txt",
+                    path: './ruleset/gfw.yaml',
+                    interval: 86400
+                },
+                'tld-not-cn': {
+                    type: 'http',
+                    behavior: 'domain',
+                    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/tld-not-cn.txt",
+                    path: './ruleset/tld-not-cn.yaml',
+                    interval: 86400
+                },
+                telegramcidr: {
+                    type: 'http',
+                    behavior: 'ipcidr',
+                    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/telegramcidr.txt",
+                    path: './ruleset/telegramcidr.yaml',
+                    interval: 86400
+                },
+                cncidr: {
+                    type: 'http',
+                    behavior: 'ipcidr',
+                    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/cncidr.txt",
+                    path: './ruleset/cncidr.yaml',
+                    interval: 86400
+                },
+                lancidr: {
+                    type: 'http',
+                    behavior: 'ipcidr',
+                    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/lancidr.txt",
+                    path: './ruleset/lancidr.yaml',
+                    interval: 86400
+                },
+                applications: {
+                    type: 'http',
+                    behavior: 'classical',
+                    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/applications.txt",
+                    path: './ruleset/applications.yaml',
+                    interval: 86400
+                }
             }
         }
 
         {
             // custom rule
             if (share) {
-                obj.rules.unshift(
-                    'DOMAIN-SUFFIX,docker.com,🔰 节点选择',
+                obj.rules =[
                     'DOMAIN,chat.openai.com,🔰 节点选择',
                     'DOMAIN-SUFFIX,openai.com,🔰 节点选择',
                     'DOMAIN-SUFFIX,bing.com,🔰 节点选择',
@@ -118,12 +224,25 @@ const parser: Parser = {
                     'DOMAIN-SUFFIX,v2free.top,DIRECT',
                     'DOMAIN-SUFFIX,deno.dev,DIRECT',
                     'DOMAIN-SUFFIX,luming.fun,DIRECT',
-                    'DOMAIN-SUFFIX,aliyun.com,DIRECT',
-                )
+                    'RULE-SET,applications,DIRECT',
+                    'DOMAIN,clash.razord.top,DIRECT',
+                    'DOMAIN,yacd.haishan.me,DIRECT',
+                    'RULE-SET,private,DIRECT',
+                    'RULE-SET,reject,REJECT',
+                    'RULE-SET,icloud,DIRECT',
+                    'RULE-SET,apple,DIRECT',
+                    'RULE-SET,proxy,🔰 节点选择',
+                    'RULE-SET,direct,DIRECT',
+                    'RULE-SET,lancidr,DIRECT',
+                    'RULE-SET,cncidr,DIRECT',
+                    'RULE-SET,telegramcidr,🔰 节点选择',
+                    'GEOIP,LAN,DIRECT',
+                    'GEOIP,CN,DIRECT',
+                    'MATCH,🐟 漏网之鱼',
+                ]
             }
             else {
-                obj.rules.unshift(
-                    'DOMAIN-SUFFIX,docker.com,🔰 节点选择',
+                obj.rules = [
                     'DOMAIN,chat.openai.com,US',
                     'DOMAIN-SUFFIX,openai.com,SG',
                     'DOMAIN-SUFFIX,bing.com,US',
@@ -132,8 +251,22 @@ const parser: Parser = {
                     'DOMAIN-SUFFIX,v2free.top,DIRECT',
                     'DOMAIN-SUFFIX,deno.dev,DIRECT',
                     'DOMAIN-SUFFIX,luming.fun,DIRECT',
-                    'DOMAIN-SUFFIX,aliyun.com,DIRECT',
-                )
+                    'RULE-SET,applications,DIRECT',
+                    'DOMAIN,clash.razord.top,DIRECT',
+                    'DOMAIN,yacd.haishan.me,DIRECT',
+                    'RULE-SET,private,DIRECT',
+                    'RULE-SET,reject,REJECT',
+                    'RULE-SET,icloud,DIRECT',
+                    'RULE-SET,apple,DIRECT',
+                    'RULE-SET,proxy,🔰 节点选择',
+                    'RULE-SET,direct,DIRECT',
+                    'RULE-SET,lancidr,DIRECT',
+                    'RULE-SET,cncidr,DIRECT',
+                    'RULE-SET,telegramcidr,🔰 节点选择',
+                    'GEOIP,LAN,DIRECT',
+                    'GEOIP,CN,DIRECT',
+                    'MATCH,🐟 漏网之鱼',
+                ]
             }
         }
 

@@ -60,13 +60,15 @@ type ProxyProvider = {
         url: string,
     }
 }
-type RuleProvider = {
-    behavior: string,
-    type: string,
-    url: string,
-    format: string,
-    interval: number,
-    path: string,
+type RuleProviders = {
+    [key: string]: {
+        behavior: string,
+        type: string,
+        url: string,
+        format?: string,
+        interval: number,
+        path: string,
+    }
 }
 
 export type Profile = {
@@ -82,5 +84,5 @@ export type Profile = {
     'proxy-groups': ProxyGroup[],
     rules: Rule[],
     'proxy-providers'?: ProxyProvider[],
-    'rule-providers'?: RuleProvider[],
+    'rule-providers'?: RuleProviders,
 }
