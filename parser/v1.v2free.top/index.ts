@@ -242,10 +242,21 @@ const parser: Parser = {
                 ]
             }
             else {
+                // ai.list from https://github.com/juewuy/ShellClash/blob/master/rules/ai.list
                 obj.rules = [
-                    'DOMAIN,chat.openai.com,US',
                     'DOMAIN-SUFFIX,openai.com,SG',
-                    'DOMAIN-SUFFIX,bing.com,US',
+                    'DOMAIN-SUFFIX,openai.nooc.ink,SG',
+                    'DOMAIN-SUFFIX,AI.com,SG',
+                    'DOMAIN-SUFFIX,cdn.auth0.com,SG',
+                    'DOMAIN-SUFFIX,openaiapi-site.azureedge.net,SG',
+                    'DOMAIN-SUFFIX,opendns.com,SG',
+                    'DOMAIN-SUFFIX,bing.com,SG',
+                    'DOMAIN-SUFFIX,civitai.com,SG',
+                    'DOMAIN,bard.google.com,SG',
+                    'DOMAIN-SUFFIX,sentry.io,SG',
+                    'DOMAIN-SUFFIX,intercom.io,SG',
+                    'DOMAIN-SUFFIX,featuregates.org,SG',
+                    'DOMAIN-SUFFIX,statsigapi.net,SG',
                     'DOMAIN-SUFFIX,github.com,🔰 节点选择',
                     'DOMAIN-SUFFIX,githubusercontent.com,🔰 节点选择',
                     'DOMAIN-SUFFIX,v2free.top,DIRECT',
