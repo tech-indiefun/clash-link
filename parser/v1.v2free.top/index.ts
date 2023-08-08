@@ -28,7 +28,7 @@ const parser: Parser = {
                     if (proxy.type === 'vmess') {
                         if (proxy.name.includes('美国'))
                             usProxies.push(proxy.name)
-                        else if (proxy.name.includes('狮城'))
+                        else if (proxy.name.includes('新加坡') || proxy.name.includes('狮城'))
                             sgProxies.push(proxy.name)
                         else if (proxy.name.includes('日本'))
                             jpProxies.push(proxy.name)
