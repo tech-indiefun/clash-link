@@ -244,6 +244,8 @@ const parser: Parser = {
             else {
                 // ai.list from https://github.com/juewuy/ShellClash/blob/master/rules/ai.list
                 obj.rules = [
+                    'DOMAIN,chat.luming.fun,SG',
+                    'DOMAIN-SUFFIX,163.com,DIRECT',
                     'DOMAIN-SUFFIX,openai.com,SG',
                     'DOMAIN-SUFFIX,openai.nooc.ink,SG',
                     'DOMAIN-SUFFIX,AI.com,SG',
