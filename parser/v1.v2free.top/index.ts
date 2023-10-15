@@ -25,7 +25,7 @@ const parser: Parser = {
                     }
                 }
                 else {
-                    if (proxy.type === 'vmess') {
+                    if (proxy.type === 'vmess' || proxy.type === 'trojan') {
                         if (proxy.name.includes('美国'))
                             usProxies.push(proxy.name)
                         else if (proxy.name.includes('新加坡') || proxy.name.includes('狮城'))
