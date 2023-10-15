@@ -52,7 +52,7 @@ const parser: Parser = {
                             }
                         }
                         if (proxies.length === 0) {
-                            proxies = [...shareArr]
+                            proxies = shareArr.map(p => (p.name))
                         }
                     }
                     else {
