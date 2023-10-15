@@ -42,7 +42,7 @@ const parser: Parser = {
             const newGroups = []
             for (let i = 0; i < groups.length; i++) {
                 const group = groups[i]
-                const proxies = []
+                let proxies = []
                 if (group.name.includes('节点选择') || group.name.includes('自动选择')) {
                     if (share) {
                         for (let j = 0; j < group.proxies.length; j++) {
@@ -50,6 +50,9 @@ const parser: Parser = {
                             if (!unShareProxies.includes(name)) {
                                 proxies.push(name)
                             }
+                        }
+                        if (proxyes.length === 0) [
+                            proxies = [...shareArr]
                         }
                     }
                     else {
