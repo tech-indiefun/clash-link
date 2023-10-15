@@ -13,6 +13,7 @@ const parser: Parser = {
             const usProxies = []
             const sgProxies = []
             const jpProxies = []
+            const noLimitProxies = []
             const shareArr = []
             const unShareProxies = []
             for (let i = 0; i < proxies.length; i++) {
@@ -32,6 +33,9 @@ const parser: Parser = {
                             sgProxies.push(proxy.name)
                         else if (proxy.name.includes('日本'))
                             jpProxies.push(proxy.name)
+                        else if (proxy.name.includes('不限流量')){
+                            noLimitProxies.push(proxy.name)
+                        }
                         vmess.push(proxy)
                     } else {
                         ssName.push(proxy.name)
@@ -66,6 +70,7 @@ const parser: Parser = {
                             proxies.unshift('JP')
                             proxies.unshift('SG')
                             proxies.unshift('US')
+                            proxies.unshift('0x')
                         }
                     }
                     group.proxies = proxies
@@ -95,6 +100,12 @@ const parser: Parser = {
                 proxies: jpProxies
             }
 
+            const group0x = {
+                name: '0x',
+                ...prependGroup,
+                proxies: noLimitProxies
+            }
+
             if (share) {
                 obj.proxies = shareArr
             }
@@ -102,6 +113,7 @@ const parser: Parser = {
                 newGroups.unshift(groupJP)
                 newGroups.unshift(groupSG)
                 newGroups.unshift(groupUS)
+                newGroups.unshift(group0x)
 
                 obj.proxies = vmess
             }
