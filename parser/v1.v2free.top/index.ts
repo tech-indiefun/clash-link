@@ -51,7 +51,7 @@ const parser: Parser = {
                                 proxies.push(name)
                             }
                         }
-                        if (proxyes.length === 0) [
+                        if (proxies.length === 0) [
                             proxies = [...shareArr]
                         }
                     }
