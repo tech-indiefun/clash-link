@@ -33,7 +33,8 @@ const parser: Parser = {
                             sgProxies.push(proxy.name)
                         else if (proxy.name.includes('日本'))
                             jpProxies.push(proxy.name)
-                        else if (proxy.name.includes('不限流量')){
+                        
+                        if (proxy.name.includes('不限流量')){
                             noLimitProxies.push(proxy.name)
                         }
                         vmess.push(proxy)
