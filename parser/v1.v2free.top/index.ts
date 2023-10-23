@@ -260,8 +260,8 @@ const parser: Parser = {
             else {
                 // ai.list from https://github.com/juewuy/ShellClash/blob/master/rules/ai.list
                 obj.rules = [
-                    'DOMAIN,gdfp.gifshow.com,DIRECT', // for pc kuaishou.com
-                    'DOMAIN,w2.kskwai.com,DIRECT', // for pc kuaishou.com
+                    'DOMAIN-SUFFIX,gifshow.com,DIRECT', // for pc kuaishou.com
+                    'DOMAIN-SUFFIX,kskwai.com,DIRECT', // for pc kuaishou.com
                     'DOMAIN,chat.luming.fun,SG',
                     'DOMAIN-SUFFIX,163.com,DIRECT',
                     'DOMAIN-SUFFIX,openai.com,SG',
