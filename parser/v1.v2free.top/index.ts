@@ -19,7 +19,7 @@ const parser: Parser = {
             for (let i = 0; i < proxies.length; i++) {
                 const proxy = proxies[i]
                 if (share) {
-                    if (proxy.name.includes('不限流量')){
+                    if (proxy.name.includes('不限流量') || proxy.name.includes('不限琉量')){
                         shareArr.push(proxy)
                     } else {
                         unShareProxies.push(proxy.name)
@@ -34,7 +34,7 @@ const parser: Parser = {
                         else if (proxy.name.includes('日本'))
                             jpProxies.push(proxy.name)
                         
-                        if (proxy.name.includes('不限流量')){
+                        if (proxy.name.includes('不限流量') || proxy.name.includes('不限琉量')){
                             noLimitProxies.push(proxy.name)
                         }
                         vmess.push(proxy)
