@@ -119,14 +119,14 @@ const parser: Parser = {
                 obj.proxies = vmess
             }
             newGroups.push({
-                name: '🎯 全球直连',
+                name: '🎯 不用代理',
                 type: 'select',
                 proxies: ['DIRECT']
             })
             newGroups.push({
                 name: '🐟 漏网之鱼',
                 type: 'select',
-                proxies: ['🔰 节点选择', '🎯 全球直连']
+                proxies: ['🔰 节点选择', '🎯 不用代理']
             })
             obj['proxy-groups'] = newGroups
         }
